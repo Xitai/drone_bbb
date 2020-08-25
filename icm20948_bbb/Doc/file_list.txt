@@ -1,0 +1,3 @@
+Function List
+
+1. inv_bool_t interface_is_SPI(void)
