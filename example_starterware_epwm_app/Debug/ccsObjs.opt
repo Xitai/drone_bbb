@@ -1,0 +1,1 @@
+"./Code/epwm_app.o" "./Code/haptics_motor/haptics_motor_app_main.o" -Wl,-T"../am335x_ddr.lds" -Wl,-T"configPkg/linker.cmd" -Wl,--start-group -lrdimon -lgcc -lm -lnosys -lc -Wl,--end-group 
