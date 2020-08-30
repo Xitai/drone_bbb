@@ -146,8 +146,8 @@ int main()
     int32_t status = S_PASS;
 
     /* Enable cache memory and MMU */
-    MMUConfigAndEnable();
-    CACHEEnable(CACHE_IDCACHE, CACHE_INNER_OUTER);
+    //MMUConfigAndEnable();
+    //CACHEEnable(CACHE_IDCACHE, CACHE_INNER_OUTER);
 
     /* Initialize the Haptics motor use case object with default values. */
     gHapticsCfg = EPWMAPPHAPTICSCFG_DEFAULT;

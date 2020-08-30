@@ -7,7 +7,7 @@
         <srcFile name="package/cfg/app_pa8fg.c"/>
     </sources>
     <configscripts>
-        <srcFile name="C:/Workspace/ws_drone_v10/example_starterware_epwm_app/app.cfg"/>
+        <srcFile name="C:/Workspace/ws_drone_v10/.git/drone_bbb/example_starterware_epwm_app/app.cfg"/>
     </configscripts>
     <makefiles>
         <srcFile name="package.mak" src="package.bld"/>
@@ -44,7 +44,7 @@
         isPartial="false"
         xCfgScript="package/cfg/app_pa8fg.cfg"
         xCfgPrefix="package/cfg/app_pa8fg"
-        cfgScript="C:/Workspace/ws_drone_v10/example_starterware_epwm_app/app.cfg"
+        cfgScript="C:/Workspace/ws_drone_v10/.git/drone_bbb/example_starterware_epwm_app/app.cfg"
         cfgArgs="null"
         />
     </configurations>
@@ -56,7 +56,7 @@
         profile="debug"
         xCfgScript="package/cfg/app_pa8fg.cfg"
         xCfgPrefix="package/cfg/app_pa8fg"
-        cfgScript="C:/Workspace/ws_drone_v10/example_starterware_epwm_app/app.cfg"
+        cfgScript="C:/Workspace/ws_drone_v10/.git/drone_bbb/example_starterware_epwm_app/app.cfg"
         cfgArgs="null"
         />
     </executables>

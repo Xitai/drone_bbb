@@ -1,5 +1,5 @@
 #
-_XDCBUILDCOUNT = 0
+_XDCBUILDCOUNT = 
 ifneq (,$(findstring path,$(_USEXDCENV_)))
 override XDCPATH = C:/ti/bios_6_76_03_01/packages;C:/ti/pdk_am335x_1_0_17/packages
 override XDCROOT = C:/ti/ccs1010/xdctools_3_61_02_27_core

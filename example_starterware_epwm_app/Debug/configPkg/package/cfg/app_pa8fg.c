@@ -1896,7 +1896,7 @@ __FAR__ const xdc_SizeT ti_sysbios_knl_Task_Module_State_terminatedQ__O = offset
  *  Define absolute path prefix for this executable's
  *  configuration generated files.
  */
-xdc__META(__ASM__, "@(#)__ASM__ = C:/Workspace/ws_drone_v10/example_starterware_epwm_app/Debug/configPkg/package/cfg/app_pa8fg");
+xdc__META(__ASM__, "@(#)__ASM__ = C:/Workspace/ws_drone_v10/.git/drone_bbb/example_starterware_epwm_app/Debug/configPkg/package/cfg/app_pa8fg");
 
 /*
  *  ======== __ISA__ ========

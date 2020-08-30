@@ -43,7 +43,7 @@ Code/haptics_motor/haptics_motor_app_main.o: \
  c:\ti\bios_6_76_03_01\packages\gnu\targets\arm\libs\install-native\arm-none-eabi\include\machine\types.h \
  c:\ti\bios_6_76_03_01\packages\gnu\targets\arm\libs\install-native\arm-none-eabi\include\sys\stdio.h \
  C:/ti/pdk_am335x_1_0_17/packages/ti/starterware/include/hw/hw_types.h \
- C:/Workspace/ws_drone_v10/example_starterware_epwm_app/Code/epwm_app.h \
+ C:/Workspace/ws_drone_v10/.git/drone_bbb/example_starterware_epwm_app/Code/epwm_app.h \
  C:/ti/pdk_am335x_1_0_17/packages/ti/starterware/include/epwm.h \
  C:/ti/pdk_am335x_1_0_17/packages/ti/starterware/include/hw/hw_pwmss_epwm.h \
  C:/ti/pdk_am335x_1_0_17/packages/ti/starterware/include/hw/hw_pwmss_submodule_offsets.h \
@@ -135,7 +135,7 @@ c:\ti\bios_6_76_03_01\packages\gnu\targets\arm\libs\install-native\arm-none-eabi
 
 C:/ti/pdk_am335x_1_0_17/packages/ti/starterware/include/hw/hw_types.h:
 
-C:/Workspace/ws_drone_v10/example_starterware_epwm_app/Code/epwm_app.h:
+C:/Workspace/ws_drone_v10/.git/drone_bbb/example_starterware_epwm_app/Code/epwm_app.h:
 
 C:/ti/pdk_am335x_1_0_17/packages/ti/starterware/include/epwm.h:
 

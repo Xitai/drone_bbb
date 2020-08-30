@@ -11715,7 +11715,7 @@ __o = __obj[1119]  // ti.starterware.examples.example_utils.Settings
     __o['configNameMap$'] = __obj[1122.0]
     __o['libProfile'] = String(java.net.URLDecoder.decode('debug', 'UTF-8'))
     __o['rovShowRawTab$'] = true
-    __o['socType'] = String(java.net.URLDecoder.decode('am335x-beagleboneblack', 'UTF-8'))
+    __o['socType'] = String(java.net.URLDecoder.decode('am335x-evm', 'UTF-8'))
     __o['viewNameMap$'] = __obj[1135.0]
 
 __o = __obj[1120]  // ti.starterware.examples.example_utils.Settings/$instances
@@ -11887,7 +11887,7 @@ __o = __obj[1136]  // ti.starterware.dal.Settings
     __o['configNameMap$'] = __obj[1139.0]
     __o['libProfile'] = String(java.net.URLDecoder.decode('debug', 'UTF-8'))
     __o['rovShowRawTab$'] = true
-    __o['socType'] = String(java.net.URLDecoder.decode('am335x-beagleboneblack', 'UTF-8'))
+    __o['socType'] = String(java.net.URLDecoder.decode('am335x-evm', 'UTF-8'))
     __o['viewNameMap$'] = __obj[1152.0]
 
 __o = __obj[1137]  // ti.starterware.dal.Settings/$instances
@@ -12323,7 +12323,7 @@ __o = __obj[1183]  // ti.starterware.utils.Settings
     __o['configNameMap$'] = __obj[1186.0]
     __o['libProfile'] = String(java.net.URLDecoder.decode('debug', 'UTF-8'))
     __o['rovShowRawTab$'] = true
-    __o['socType'] = String(java.net.URLDecoder.decode('am335x-beagleboneblack', 'UTF-8'))
+    __o['socType'] = String(java.net.URLDecoder.decode('am335x-evm', 'UTF-8'))
     __o['viewNameMap$'] = __obj[1199.0]
 
 __o = __obj[1184]  // ti.starterware.utils.Settings/$instances
@@ -12495,7 +12495,7 @@ __o = __obj[1200]  // ti.starterware.board.Settings
     __o['configNameMap$'] = __obj[1203.0]
     __o['libProfile'] = String(java.net.URLDecoder.decode('debug', 'UTF-8'))
     __o['rovShowRawTab$'] = true
-    __o['socType'] = String(java.net.URLDecoder.decode('am335x-beagleboneblack', 'UTF-8'))
+    __o['socType'] = String(java.net.URLDecoder.decode('am335x-evm', 'UTF-8'))
     __o['viewNameMap$'] = __obj[1216.0]
 
 __o = __obj[1201]  // ti.starterware.board.Settings/$instances
@@ -12667,7 +12667,7 @@ __o = __obj[1217]  // ti.starterware.soc.Settings
     __o['configNameMap$'] = __obj[1220.0]
     __o['libProfile'] = String(java.net.URLDecoder.decode('debug', 'UTF-8'))
     __o['rovShowRawTab$'] = true
-    __o['socType'] = String(java.net.URLDecoder.decode('am335x-beagleboneblack', 'UTF-8'))
+    __o['socType'] = String(java.net.URLDecoder.decode('am335x-evm', 'UTF-8'))
     __o['viewNameMap$'] = __obj[1233.0]
 
 __o = __obj[1218]  // ti.starterware.soc.Settings/$instances
@@ -17982,7 +17982,7 @@ __o = __obj[1342]
     __o['cfgArgs'] = null
     __o['cfgArgsEncoded'] = true
     __o['cfgHome'] = String(java.net.URLDecoder.decode('configPkg', 'UTF-8'))
-    __o['cfgScript'] = String(java.net.URLDecoder.decode('C%3A%2FWorkspace%2Fws_drone_v10%2Fexample_starterware_epwm_app%2Fapp.cfg', 'UTF-8'))
+    __o['cfgScript'] = String(java.net.URLDecoder.decode('C%3A%2FWorkspace%2Fws_drone_v10%2F.git%2Fdrone_bbb%2Fexample_starterware_epwm_app%2Fapp.cfg', 'UTF-8'))
     __o['prelink'] = false
     __o['profile'] = String(java.net.URLDecoder.decode('debug', 'UTF-8'))
     __o['releases'] = __obj[1343.0]
