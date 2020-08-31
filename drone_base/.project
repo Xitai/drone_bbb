@@ -32,4 +32,10 @@
 			<location>C:/ti/pdk_am335x_1_0_17/packages/ti/drv/gpio/test/led_blink/src/am335x/GPIO_bbbAM335x_board.c</location>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>STARTERWARE_DIR</name>
+			<value>file:/C:/ti/pdk_am335x_1_0_17/packages/ti/starterware</value>
+		</variable>
+	</variableList>
 </projectDescription>

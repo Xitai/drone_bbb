@@ -10,13 +10,13 @@ __STACK_SIZE = __TI_STACK_SIZE;
 __HEAP_SIZE = 0x0;
 
 INPUT(
-    "C:\Workspace\ws_drone_v10\example_starterware_epwm_app\Debug\configPkg\package\cfg\app_pa8fg.oa8fg"
-    "C:\Workspace\ws_drone_v10\example_starterware_epwm_app\src\sysbios\sysbios.aa8fg"
-    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\soc\lib\am335x-beagleboneblack\a8\debug\gcc\libsoc.a"
-    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\board\lib\am335x-beagleboneblack\a8\debug\gcc\libboard.a"
-    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\utils\lib\am335x-beagleboneblack\a8\debug\gcc\libutils.a"
-    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\dal\lib\am335x-beagleboneblack\a8\debug\gcc\libdal.a"
-    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\examples\example_utils\lib\am335x-beagleboneblack\a8\debug\gcc\libexample_utils.a"
+    "C:\Workspace\ws_drone_v10\.git\drone_bbb\example_starterware_epwm_app\Debug\configPkg\package\cfg\app_pa8fg.oa8fg"
+    "C:\Workspace\ws_drone_v10\.git\drone_bbb\example_starterware_epwm_app\src\sysbios\sysbios.aa8fg"
+    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\soc\lib\am335x-evm\a8\debug\gcc\libsoc.a"
+    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\board\lib\am335x-evm\a8\debug\gcc\libboard.a"
+    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\utils\lib\am335x-evm\a8\debug\gcc\libutils.a"
+    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\dal\lib\am335x-evm\a8\debug\gcc\libdal.a"
+    "C:\ti\pdk_am335x_1_0_17\packages\ti\starterware\binary\examples\example_utils\lib\am335x-evm\a8\debug\gcc\libexample_utils.a"
     "C:\ti\bios_6_76_03_01\packages\gnu\targets\arm\rtsv7A\lib\gnu.targets.arm.rtsv7A.aa8fg"
     "C:\ti\bios_6_76_03_01\packages\gnu\targets\arm\rtsv7A\lib\boot.aa8fg"
     "C:\ti\bios_6_76_03_01\packages\gnu\targets\arm\rtsv7A\lib\syscalls.aa8fg"
