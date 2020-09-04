@@ -37,7 +37,7 @@
 #include "bbb_i2c.h"
 //#include "icm20948_system.h"
 #include "EmbUtils/Message.h"
-#include "bbb_epwm.h"
+//#include "bbb_epwm.h"
 
 
 /* Test */
@@ -58,65 +58,66 @@ static void msg_printer(int level, const char * str, va_list ap);
 
 //static char achPrintOutBuf[256];
 
-/********************* EPWM *************************/
-/** \brief Structure holding haptics-motor use-case specific parameters. */
-typedef struct epwmAppHapticsCfg
-{
-    uint32_t tbClk;
-    /**< Time base clock (Prescaled clock for PWMSS functional clock) in Hz. */
-    uint32_t pwmFreq;
-    /**< PWM output frequency in Hz. */
-    uint32_t enableDeadband;
-    /**< Enable dead band sub-module processing. */
-    uint32_t enableChopper;
-    /**< Enable chopper sub-module processing. */
-    uint32_t enableTripZone;
-    /**< Enable Trip zone processing. */
-    uint32_t enableEventTrigger;
-    /**< Enable Event trigger. */
-    uint32_t enableHighResolution;
-    /**< Enable High resolution pwm feature. */
-}epwmAppHapticsCfg_t;
-
-/** \brief Global object for the EPWM Haptics motor Use case data structure.  */
-static epwmAppHapticsCfg_t gHapticsCfg;
-
-/** \brief Global object for the EPWM IP configuration data structure.  */
-static epwmAppPwmObj_t gPwmCfg;
-
-
-static void EpwmAppUpdateCfgParams(epwmAppPwmObj_t *pPwm,
-                                   epwmAppHapticsCfg_t *pHaptics)
-{
-    epwmAppPwmCfg_t *pCfg = &pPwm->pwmCfg;
-
-    /* Disable all the sub-modules by default */
-    pPwm->enableDeadband = pHaptics->enableDeadband;
-    pPwm->enableChopper = pHaptics->enableDeadband;
-    pPwm->enableTripZone = pHaptics->enableDeadband;
-    pPwm->enableEventTrigger = pHaptics->enableDeadband;
-    pPwm->enableHighResolution = pHaptics->enableDeadband;
-
-    /* Tb period/freq has to be double the required pwm frequency. */
-    pCfg->tbCfg.pwmtbCounterFreqPrd = pHaptics->pwmFreq * 2U;
-    pCfg->tbCfg.tbClk = pHaptics->tbClk;
-
-    /* Action Qualifier Action Values */
-    /* Toggle output when counter is equal to period value. */
-    pCfg->aqCfg.prdAction      = EPQM_AQ_ACTION_TOLLGE;
-}
+///********************* EPWM *************************/
+///** \brief Structure holding haptics-motor use-case specific parameters. */
+//typedef struct epwmAppHapticsCfg
+//{
+//    uint32_t tbClk;
+//    /**< Time base clock (Prescaled clock for PWMSS functional clock) in Hz. */
+//    uint32_t pwmFreq;
+//    /**< PWM output frequency in Hz. */
+//    uint32_t enableDeadband;
+//    /**< Enable dead band sub-module processing. */
+//    uint32_t enableChopper;
+//    /**< Enable chopper sub-module processing. */
+//    uint32_t enableTripZone;
+//    /**< Enable Trip zone processing. */
+//    uint32_t enableEventTrigger;
+//    /**< Enable Event trigger. */
+//    uint32_t enableHighResolution;
+//    /**< Enable High resolution pwm feature. */
+//}epwmAppHapticsCfg_t;
+//
+///** \brief Global object for the EPWM Haptics motor Use case data structure.  */
+//static epwmAppHapticsCfg_t gHapticsCfg;
+//
+///** \brief Global object for the EPWM IP configuration data structure.  */
+//static epwmAppPwmObj_t gPwmCfg;
+//
+//
+//static void EpwmAppUpdateCfgParams(epwmAppPwmObj_t *pPwm,
+//                                   epwmAppHapticsCfg_t *pHaptics)
+//{
+//    epwmAppPwmCfg_t *pCfg = &pPwm->pwmCfg;
+//
+//    /* Disable all the sub-modules by default */
+//    pPwm->enableDeadband = pHaptics->enableDeadband;
+//    pPwm->enableChopper = pHaptics->enableDeadband;
+//    pPwm->enableTripZone = pHaptics->enableDeadband;
+//    pPwm->enableEventTrigger = pHaptics->enableDeadband;
+//    pPwm->enableHighResolution = pHaptics->enableDeadband;
+//
+//    /* Tb period/freq has to be double the required pwm frequency. */
+//    pCfg->tbCfg.pwmtbCounterFreqPrd = pHaptics->pwmFreq * 2U;
+//    pCfg->tbCfg.tbClk = pHaptics->tbClk;
+//
+//    /* Action Qualifier Action Values */
+//    /* Toggle output when counter is equal to period value. */
+//    pCfg->aqCfg.prdAction      = EPQM_AQ_ACTION_TOLLGE;
+//}
 
 
 
 
 Void taskMovement(UArg a0, UArg a1)
-{	
+{
     int rc = 0;
 #ifdef INV_MSG_ENABLE
     /* Setup message logging */
     INV_MSG_SETUP(INV_MSG_LEVEL_MAX, msg_printer);             // 제어보드 로그 메시지 설정 -- 제거/변경
 #endif
 
+#if (1)
     INV_MSG(INV_MSG_LEVEL_INFO, "###################################"); // 메시지 printf
     INV_MSG(INV_MSG_LEVEL_INFO, "#   ICM20948 example              #"); // 메시지 printf
     INV_MSG(INV_MSG_LEVEL_INFO, "###################################"); // 메시지 printf
@@ -153,10 +154,15 @@ Void taskMovement(UArg a0, UArg a1)
     rc += userStartSensor(INV_SENSOR_TYPE_ORIENTATION);
 
     //uchImuStart = 0x1;
-
+#endif
     /**************************** EPWM **************************/
-    EpwmAppUpdateCfgParams(&gPwmCfg, &gHapticsCfg);
-    EPWMAppInit(&gPwmCfg);
+//    gPwmCfg     = EPWMAPPPWMOBJ_DEFAULT;
+
+//    int32_t status = S_PASS;
+
+    //EpwmAppUpdateCfgParams(&gPwmCfg, &gHapticsCfg);
+    //EPWMAppInit(&gPwmCfg);
+
 
 
 
