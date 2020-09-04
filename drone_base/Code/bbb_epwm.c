@@ -52,13 +52,14 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include "types.h"
-#include "chipdb.h"
-#include "pinmux.h"
-#include "epwm.h"
-#include "error.h"
+//#include "types.h"
+//#include "chipdb.h"
+//#include "pinmux.h"
+//#include "epwm.h"
+//#include "error.h"
 //#include "console_utils.h"
-#include "soc_control.h"
+//#include "soc_control.h"
+//#include "soc_AM335x.h"
 
 /* Application header files */
 #include "bbb_epwm.h"
@@ -119,8 +120,8 @@ static void EpwmAppCounterComparatorCfg(uint32_t baseAddr,
 /** \brief IP default configuration */
 epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT =
 {
-    0U, /* pwmCh*/
-    0U, /* instNum*/
+    1U, /* pwmCh*/
+    1U, /* instNum*/
     0U, /* instAddr*/
     0U, /* funcClk*/
     FALSE, /* enableDeadband */
@@ -183,10 +184,10 @@ epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT =
 uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
 {
     int32_t status = S_PASS;
-    uint16_t ePwmSubmodType = PINMUX_SS_PWMSS_EHRPWM0;
+    //uint16_t ePwmSubmodType = PINMUX_SS_PWMSS_EHRPWM0;
 
     /* Clock Configuration  */
-    status = PRCMModuleEnable(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, 0);
+//    status = PRCMModuleEnable(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, 0);
     if(S_PASS != status)
     {
         //CONSOLEUtilsPrintf("\n FAILURE!!! Clock Configuration failed !\n");
@@ -194,7 +195,7 @@ uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
     else
     {
         /* PinMux Configuration */
-        status = PINMUXModuleConfig(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, &ePwmSubmodType);
+//        status = PINMUXModuleConfig(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, &ePwmSubmodType);
         if(S_PASS != status)
         {
             //CONSOLEUtilsPrintf("\n FAILURE!!! Pin Muxing failed !\n");
@@ -204,9 +205,9 @@ uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
             /* Get the functional clock value of PWMSS */
             /* TODO: This value has to be provided by the PRCM data base */
             pPwm->funcClk = SOC_EHRPWM_2_MODULE_FREQ;
-
+            pPwm->instAddr = SOC_PWMSS1_REGS;
             /* Enable clocks for EPWM module inside the PWM sub system. */
-            EHRPWMClockEnable(pPwm->instAddr);
+//            EHRPWMClockEnable(pPwm->instAddr);
 
             /* Enable Time base clock for PWMSS module */
             SOCCtrlPwmssTimebaseClkEnable(pPwm->instNum);
