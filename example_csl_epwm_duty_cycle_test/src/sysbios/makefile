@@ -17,7 +17,7 @@ CCOPTS = -Wunused -Wunknown-pragmas -ffunction-sections -fdata-sections  -mcpu=c
 
 BIOS_INC = -I"C:/ti/bios_6_76_03_01/packages/"
 ANNEX_INCS = 
-INCS = $(BIOS_INC) $(ANNEX_INCS) -I"C:/ti/bios_6_76_03_01/packages/" -I"C:/ti/pdk_am335x_1_0_17/packages/" -I"C:/ti/ccs1010/xdctools_3_61_02_27_core/packages/" -I"../" -I"/packages//"  -IC:/ti/bios_6_76_03_01/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include/newlib-nano -IC:/ti/bios_6_76_03_01/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include
+INCS = $(BIOS_INC) $(ANNEX_INCS) -I"C:/ti/bios_6_76_03_01/packages/" -I"C:/ti/pdk_am335x_1_0_17/packages/" -I"C:/Workspace/ws_drone_v10/.git/drone_bbb/example_csl_epwm_duty_cycle_test/platform/" -I"C:/ti/ccs1010/xdctools_3_61_02_27_core/packages/" -I"../" -I"/packages//"  -IC:/ti/bios_6_76_03_01/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include/newlib-nano -IC:/ti/bios_6_76_03_01/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include
 
 CC = C:/ti/ccs1010/ccs/tools/compiler/gcc-arm-none-eabi-7-2017-q4-major-win32/bin/arm-none-eabi-gcc -c -MD -MF $@.dep $(CCOPTS)
 ASM = C:/ti/ccs1010/ccs/tools/compiler/gcc-arm-none-eabi-7-2017-q4-major-win32/bin/arm-none-eabi-gcc -c -x assembler-with-cpp $(CCOPTS)

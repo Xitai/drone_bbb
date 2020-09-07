@@ -1,0 +1,34 @@
+bbbAM335x_drone.zip: Platform.xdc
+Platform.xdc:
+bbbAM335x_drone.zip: Platform.xs
+Platform.xs:
+bbbAM335x_drone.zip: config.bld
+config.bld:
+bbbAM335x_drone.zip: package/.vers_b200
+package/.vers_b200:
+bbbAM335x_drone.zip: package/.vers_g200
+package/.vers_g200:
+bbbAM335x_drone.zip: package/.vers_r200
+package/.vers_r200:
+bbbAM335x_drone.zip: package/.xdc-I11
+package/.xdc-I11:
+bbbAM335x_drone.zip: package/bbbAM335x_drone.ccs
+package/bbbAM335x_drone.ccs:
+bbbAM335x_drone.zip: package/bbbAM335x_drone.class
+package/bbbAM335x_drone.class:
+bbbAM335x_drone.zip: package/bbbAM335x_drone.java
+package/bbbAM335x_drone.java:
+bbbAM335x_drone.zip: package/bbbAM335x_drone.sch
+package/bbbAM335x_drone.sch:
+bbbAM335x_drone.zip: package/build.cfg
+package/build.cfg:
+bbbAM335x_drone.zip: package/package.bld.xml
+package/package.bld.xml:
+bbbAM335x_drone.zip: package/package.defs.h
+package/package.defs.h:
+bbbAM335x_drone.zip: package/package_bbbAM335x_drone.c
+package/package_bbbAM335x_drone.c:
+bbbAM335x_drone.zip: package.bld
+package.bld:
+bbbAM335x_drone.zip: package.xdc
+package.xdc:
