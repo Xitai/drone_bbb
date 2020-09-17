@@ -336,6 +336,7 @@ static void EpwmAppUpdateCfgParams(epwmAppPwmObj_t *pPwm,
 
     /* Action Qualifier Action Values */
     /* Toggle output when counter is equal to period value. */
-    pCfg->aqCfg.prdAction      = EPQM_AQ_ACTION_TOLLGE;
+    pCfg->aqCfg.prdAction      = EPWM_AQ_ACTION_LOW;
+    pCfg->aqCfg.cmpAUpAction   = EPWM_AQ_ACTION_HIGH;
 }
 

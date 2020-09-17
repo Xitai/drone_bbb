@@ -129,13 +129,13 @@ epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0U, /* cmpAValue */
-            0U  /* cmpBValue */
+            0x50U, /* cmpAValue */
+            0x30U  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
-            EPWM_AQ_ACTION_DONOTHING, /* prdAction */
-            EPWM_AQ_ACTION_DONOTHING, /* cmpAUpAction */
+            EPWM_AQ_ACTION_LOW, /* prdAction */
+            EPWM_AQ_ACTION_HIGH, /* cmpAUpAction */
             EPWM_AQ_ACTION_DONOTHING, /* cmpADownAction */
             EPWM_AQ_ACTION_DONOTHING, /* cmpBUpAction */
             EPWM_AQ_ACTION_DONOTHING  /* cmpBDownAction */
@@ -176,21 +176,21 @@ uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
 	uint16_t ePwmSubmodType = PINMUX_SS_PWMSS_EHRPWM0;
 
     /* Clock Configuration  */
-    status = PRCMModuleEnable(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, 0);
-    if(S_PASS != status)
-    {
-        UART_printf("\n FAILURE!!! Clock Configuration failed !\n");
-    }
-    else
-    {
-        /* PinMux Configuration */
-        status = PINMUXModuleConfig(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, &ePwmSubmodType);
-        if(S_PASS != status)
-        {
-            UART_printf("\n FAILURE!!! Pin Muxing failed !\n");
-        }
-        else
-        {
+//    status = PRCMModuleEnable(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, 0);
+//    if(S_PASS != status)
+//    {
+//        UART_printf("\n FAILURE!!! Clock Configuration failed !\n");
+//    }
+//    else
+//    {
+//        /* PinMux Configuration */
+//        status = PINMUXModuleConfig(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, &ePwmSubmodType);
+//        if(S_PASS != status)
+//        {
+//            UART_printf("\n FAILURE!!! Pin Muxing failed !\n");
+//        }
+//        else
+//        {
             /* Get the functional clock value of PWMSS */
             /* TODO: This value has to be provided by the PRCM data base */
             pPwm->funcClk = SOC_EHRPWM_2_MODULE_FREQ;
@@ -203,8 +203,8 @@ uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
 
             /* EPWM channel configuration */
             EpwmAppPwmCfg(pPwm);
-        }
-    }
+//        }
+//    }
 
     return status;
 }
@@ -229,7 +229,8 @@ static void EpwmAppPwmCfg(epwmAppPwmObj_t *pObj)
 
     /* Configure Action Qualifier */
     EPWMAqActionOnOutputCfg(baseAddr, pwmCh, &pPwm->aqCfg);
-
+	
+#if (0)
     /* Dead band sub-module configuration */
     if(TRUE == pObj->enableDeadband)
     {
@@ -242,7 +243,7 @@ static void EpwmAppPwmCfg(epwmAppPwmObj_t *pObj)
         EPWMDeadbandBypass(baseAddr);
     }
 
-    /* Chopper sub-module configuration */
+  /* Chopper sub-module configuration */
     if(TRUE == pObj->enableChopper)
     {
         /* Configure chopper sub - module */
@@ -257,7 +258,7 @@ static void EpwmAppPwmCfg(epwmAppPwmObj_t *pObj)
         EPWMChopperEnable(baseAddr, FALSE);
     }
 
-    /* Trip Zone Sub-Module Configuration */
+  /* Trip Zone Sub-Module Configuration */
     if(TRUE == pObj->enableTripZone)
     {
         /* Configure the Trip action */
@@ -276,7 +277,7 @@ static void EpwmAppPwmCfg(epwmAppPwmObj_t *pObj)
             pPwm->tzCfg.tripPin);
     }
 
-    /* Event trigger sub - module configuration */
+  /* Event trigger sub - module configuration */
     if(TRUE == pObj->enableEventTrigger)
     {
         /* Configure the Event trigger processing */
@@ -319,6 +320,8 @@ static void EpwmAppPwmCfg(epwmAppPwmObj_t *pObj)
             EHRPWMHRDisable(baseAddr);
         }
     }
+#endif // Not Use
+	
 }
 
 
@@ -358,9 +361,9 @@ static void EpwmAppCounterComparatorCfg(uint32_t baseAddr,
 {
     /* Counter Comparator A configuration */
     EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_A, pCcCfg->cmpAValue,
-        EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_NO_LOAD, TRUE);
+                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
 
     /* Counter Comparator B configuration */
     EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_B, pCcCfg->cmpBValue,
-        EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_NO_LOAD, TRUE);
+                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
 }

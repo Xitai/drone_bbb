@@ -27,6 +27,10 @@
 	</natures>
 	<variableList>
 		<variable>
+			<name>ORIGINAL_PROJECT_ROOT</name>
+			<value>file:/C:/Workspace/ws_drone_v10/.git/drone_bbb/example_sysbios_starterware_epwm</value>
+		</variable>
+		<variable>
 			<name>STARTERWARE_DIR</name>
 			<value>file:/C:/ti/pdk_am335x_1_0_17/packages/ti/starterware</value>
 		</variable>
