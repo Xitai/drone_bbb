@@ -12,4 +12,5 @@
 	<templateProperties value="id=com.ti.rtsc.SYSBIOS.example_70,type=rtsc,products=com.ti.rtsc.SYSBIOS,target=gnu.targets.arm.A8F,buildProfile=release,isHybrid=true"/>
 	<filesToOpen value=""/>
 	<isTargetManual value="false"/>
+	<origin value="C:/Workspace/ws_drone_v10/.git/drone_bbb/example_sysbios_starterware_epwm"/>
 </projectOptions>
