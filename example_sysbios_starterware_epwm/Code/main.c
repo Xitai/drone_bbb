@@ -48,14 +48,11 @@
 
 /* Application header files */
 #include "epwm_app.h"
-#include "haptics_motor_app.h"
 
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
 
-/** \brief HAPTICS device instance number */
-#define EPWM_HAPTICS_INST_NUM     (0U)
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -68,19 +65,6 @@
 /* ========================================================================== */
 
 /**
- * \brief   This API gets the board info like PWM channel [A or B] and instance.
- *
- * \param   pObj     Pointer to the pin object.
- *
- * \retval  S_PASS   Board info successful retrieved. Haptics motor is
- *                   connected to EPWM on this board.
- * \retval  E_FAIL   This board does not support this application.
- *                   - Haptics motor device may not be available on this board.
- *                   - Haptics motor may not be connected to EPWM on this board.
- */
-static int32_t EpwmAppBoardInfoGet(epwmAppPwmObj_t *pObj);
-
-/**
  * \brief   This API gets the soc info - base address of epwm instance.
  *
  * \param   pObj     Pointer to the pwm object.
@@ -90,33 +74,9 @@ static int32_t EpwmAppBoardInfoGet(epwmAppPwmObj_t *pObj);
  */
 static uint32_t EpwmAppSocInfoGet(epwmAppPwmObj_t *pObj);
 
-/**
- * \brief   This API sets the default configuration for entire EPWM sub-module.
- *
- * \param   pPwm        Pointer to the pwm object.
- * \param   pHaptics    Pointer to haptics motor use case data structure.
- */
-static void EpwmAppUpdateCfgParams(epwmAppPwmObj_t *pPwm,
-                                   epwmAppHapticsCfg_t *pHaptics);
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-
-/** \brief Application Use Case default configuration */
-//static const epwmAppHapticsCfg_t EPWMAPPHAPTICSCFG_DEFAULT =
-//{
-//        10U * FREQ_MHZ, /* tbClk */
-//        20U * FREQ_KHZ, /* pwmFreq */
-//        FALSE, /* enableDeadband */
-//        FALSE, /* enableChopper */
-//        FALSE, /* enableTripzone */
-//        FALSE, /* enableEventTrigger */
-//        FALSE  /* enableHighResolution */
-//};
-
-
-/** \brief Global object for the EPWM Haptics motor Use case data structure.  */
-static epwmAppHapticsCfg_t gHapticsCfg;
 
 /** \brief Global object for the EPWM IP configuration data structure.  */
 static epwmAppPwmObj_t gPwmCfg;
@@ -165,8 +125,6 @@ Void taskFxn(UArg a0, UArg a1)
 	
     int32_t status = S_PASS;
 
-    /* Initialize the Haptics motor use case object with default values. */
-    //gHapticsCfg = EPWMAPPHAPTICSCFG_DEFAULT;
 
     /* Initialize the global IP configuration with default configuration. */
     gPwmCfg     = CONF_EPWM1_MOTOR;
@@ -174,41 +132,29 @@ Void taskFxn(UArg a0, UArg a1)
     UART_printf("\n StarterWare EPWM Application!!\n");
     UART_printf("BOARDInit status [0x%x]\n", status);
 
-    /* Get board info */
-//    status = EpwmAppBoardInfoGet(&gPwmCfg);
-//    if (S_PASS == status)
-//    {
-        /* Get SoC info */
-        status = EpwmAppSocInfoGet(&gPwmCfg);
-        if(S_PASS == status)
-        {
-            /* EPWM Default configuration */
-            //EpwmAppUpdateCfgParams(&gPwmCfg, &gHapticsCfg);
-
-            /* EPWM IP configuration */
-            status = EPWMAppInit(&gPwmCfg);
-            if(S_PASS == status)
-            {
-                UART_printf("\nNow running the haptics motor ...\n");
-                while(1)
-                {
-                    /* Infinite loop */
-                }
-            }
-            else
-            {
-                UART_printf("\n FAILURE!!! EPWM IP configuration is failed ...\n");
-            }
-        }
-        else
-        {
-            UART_printf("\nEPWM IP instance is not present ...\n");
-        }
-//    }
-//    else
-//    {
-//        UART_printf("This example is not supported on this board!\n");
-//    }
+	/* Get SoC info */
+	status = EpwmAppSocInfoGet(&gPwmCfg);
+	if(S_PASS == status)
+	{
+		/* EPWM IP configuration */
+		status = EPWMAppInit(&gPwmCfg);
+		if(S_PASS == status)
+		{
+			UART_printf("\nNow running the haptics motor ...\n");
+			while(1)
+			{
+				/* Infinite loop */
+			}
+		}
+		else
+		{
+			UART_printf("\n FAILURE!!! EPWM IP configuration is failed ...\n");
+		}
+	}
+	else
+	{
+		UART_printf("\nEPWM IP instance is not present ...\n");
+	}
 
     System_printf("exit taskFxn()\n");
 
@@ -242,17 +188,6 @@ Int main()
 /*                 Internal Function Definitions                              */
 /* -------------------------------------------------------------------------- */
 
-static int32_t EpwmAppBoardInfoGet(epwmAppPwmObj_t *pObj)
-{
-    int32_t status = E_FAIL;
-	
-	pObj->instNum = 2U; // EPWM2
-	pObj->pwmCh   = 0U; // EPWM2A
-	status = S_PASS;
-
-    return (status);
-}
-
 static uint32_t EpwmAppSocInfoGet(epwmAppPwmObj_t *pObj)
 {
     uint32_t status = S_PASS;
@@ -269,27 +204,5 @@ static uint32_t EpwmAppSocInfoGet(epwmAppPwmObj_t *pObj)
     }
 
     return status;
-}
-
-static void EpwmAppUpdateCfgParams(epwmAppPwmObj_t *pPwm,
-                                   epwmAppHapticsCfg_t *pHaptics)
-{
-    epwmAppPwmCfg_t *pCfg = &pPwm->pwmCfg;
-
-    /* Disable all the sub-modules by default */
-    pPwm->enableDeadband = pHaptics->enableDeadband;
-    pPwm->enableChopper = pHaptics->enableDeadband;
-    pPwm->enableTripZone = pHaptics->enableDeadband;
-    pPwm->enableEventTrigger = pHaptics->enableDeadband;
-    pPwm->enableHighResolution = pHaptics->enableDeadband;
-
-    /* Tb period/freq has to be double the required pwm frequency. */
-    //pCfg->tbCfg.pwmtbCounterFreqPrd = pHaptics->pwmFreq * 2U;
-    //pCfg->tbCfg.tbClk = pHaptics->tbClk;
-
-    /* Action Qualifier Action Values */
-    /* Toggle output when counter is equal to period value. */
-    pCfg->aqCfg.prdAction      = EPWM_AQ_ACTION_LOW;
-    pCfg->aqCfg.cmpAUpAction   = EPWM_AQ_ACTION_HIGH;
 }
 

@@ -93,16 +93,6 @@ static void EpwmAppTimebaseModuleCfg(uint32_t baseAddr,
                                      uint32_t pwmFuncClk,
                                      epwmTimebaseCfg_t *pTbCfg);
 
-/**
- * \brief   This API configures the Counter-Comparator Sub-module.
- *
- * \param   baseAddr             Base address of PWMSS instance used
- * \param   epwmCounterCmpCfg_t  Pointer to the Counter-Comparator Sub-module
- *                               configuration data structure
- */
-static void EpwmAppCounterComparatorCfg(uint32_t baseAddr,
-                                        epwmCounterCmpCfg_t *pCcCfg);
-
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -174,12 +164,7 @@ epwmAppPwmObj_t CONF_EPWM1_MOTOR =
 uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
 {
     int32_t status = S_PASS;
-	//uint16_t ePwmSubmodType = PINMUX_SS_PWMSS_EHRPWM0;
-
-	/* Get the functional clock value of PWMSS */
-	/* TODO: This value has to be provided by the PRCM data base */
-	//pPwm->funcClk = SOC_EHRPWM_2_MODULE_FREQ;
-
+	
 	/* Enable clocks for EPWM module inside the PWM sub system. */
 	EHRPWMClockEnable(pPwm->instAddr);
 
@@ -200,20 +185,16 @@ uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
 static void EpwmAppPwmCfg(epwmAppPwmObj_t *pObj)
 {
     uint32_t baseAddr = pObj->instAddr;
-    uint32_t pwmCh    = pObj->pwmCh;
+    //uint32_t pwmCh    = pObj->pwmCh;
     uint32_t pwmFuncClk = pObj->funcClk;
     epwmAppPwmCfg_t *pPwm = &pObj->pwmCfg;
 
     /* Configure the Time base Sub-Module */
     EpwmAppTimebaseModuleCfg(baseAddr, pwmFuncClk, &pPwm->tbCfg);
 
-    /* Counter-Comparator Sub-Module Configuration */
-    //EpwmAppCounterComparatorCfg(baseAddr, &pPwm->ccCfg);
-
     /* Configure Action Qualifier */
     EPWMAqActionOnOutputCfg(baseAddr, 0U, &pPwm->aqCfg);
-	
-	
+
 	
 	pPwm->aqCfg.cmpBDownAction = EPWM_AQ_ACTION_DONOTHING;/* zeroAction */
 	pPwm->aqCfg.cmpBUpAction	= EPWM_AQ_ACTION_HIGH; /* prdAction */
@@ -357,16 +338,4 @@ static void EpwmAppTimebaseModuleCfg(uint32_t baseAddr,
 
     /* Configure the emulation behaviour */
     EPWMTbSetEmulationMode(baseAddr, EPWM_TB_EMU_MODE_STP_AFT_NEXT_CYCLE);
-}
-
-static void EpwmAppCounterComparatorCfg(uint32_t baseAddr,
-                                     epwmCounterCmpCfg_t *pCcCfg)
-{
-    /* Counter Comparator A configuration */
-    EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_A, pCcCfg->cmpAValue,
-                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
-
-    /* Counter Comparator B configuration */
-    EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_B, pCcCfg->cmpBValue,
-                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
 }
