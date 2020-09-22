@@ -60,6 +60,7 @@
 
 /* TODO: This macro is not needed. This value should be provided by PRCM info. */
 /** \brief Functional clock to the PWMSS. */
+
 #define SOC_EHRPWM_2_MODULE_FREQ      (100U * FREQ_MHZ)
 
 /* ========================================================================== */
@@ -92,27 +93,17 @@ static void EpwmAppTimebaseModuleCfg(uint32_t baseAddr,
                                      uint32_t pwmFuncClk,
                                      epwmTimebaseCfg_t *pTbCfg);
 
-/**
- * \brief   This API configures the Counter-Comparator Sub-module.
- *
- * \param   baseAddr             Base address of PWMSS instance used
- * \param   epwmCounterCmpCfg_t  Pointer to the Counter-Comparator Sub-module
- *                               configuration data structure
- */
-static void EpwmAppCounterComparatorCfg(uint32_t baseAddr,
-                                        epwmCounterCmpCfg_t *pCcCfg);
-
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/** \brief IP default configuration */
-epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT =
+/** Motor 0 EPWM Configuration */
+epwmAppPwmObj_t CONF_EPWM1_MOTOR =
 {
     0U, /* pwmCh*/
-    0U, /* instNum*/
+    1U, /* instNum*/
     0U, /* instAddr*/
-    0U, /* funcClk*/
+    100U * FREQ_MHZ, /* funcClk*/
     FALSE, /* enableDeadband */
     FALSE, /* enableChopper */
     FALSE, /* enableTripzone */
@@ -121,7 +112,7 @@ epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT =
     {
         {
             10U * FREQ_MHZ, /* tbClk */
-            0U, /* pwmtbCounterFreqPrd */
+            500U, /* pwmtbCounterFreqPrd */
             EPWM_TB_COUNTER_DIR_UP, /* tbCntrDirection */
             FALSE, /* enableSynchronization */
             0U, /* cntDirAfterSync */
@@ -129,8 +120,8 @@ epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x50U, /* cmpAValue */
-            0x30U  /* cmpBValue */
+            0x3000U, /* cmpAValue */
+            0x3000U  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -173,38 +164,15 @@ epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT =
 uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
 {
     int32_t status = S_PASS;
-	uint16_t ePwmSubmodType = PINMUX_SS_PWMSS_EHRPWM0;
+	
+	/* Enable clocks for EPWM module inside the PWM sub system. */
+	EHRPWMClockEnable(pPwm->instAddr);
 
-    /* Clock Configuration  */
-//    status = PRCMModuleEnable(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, 0);
-//    if(S_PASS != status)
-//    {
-//        UART_printf("\n FAILURE!!! Clock Configuration failed !\n");
-//    }
-//    else
-//    {
-//        /* PinMux Configuration */
-//        status = PINMUXModuleConfig(CHIPDB_MOD_ID_PWMSS, pPwm->instNum, &ePwmSubmodType);
-//        if(S_PASS != status)
-//        {
-//            UART_printf("\n FAILURE!!! Pin Muxing failed !\n");
-//        }
-//        else
-//        {
-            /* Get the functional clock value of PWMSS */
-            /* TODO: This value has to be provided by the PRCM data base */
-            pPwm->funcClk = SOC_EHRPWM_2_MODULE_FREQ;
+	/* Enable Time base clock for PWMSS module */
+	SOCCtrlPwmssTimebaseClkEnable(pPwm->instNum);
 
-            /* Enable clocks for EPWM module inside the PWM sub system. */
-            EHRPWMClockEnable(pPwm->instAddr);
-
-            /* Enable Time base clock for PWMSS module */
-            SOCCtrlPwmssTimebaseClkEnable(pPwm->instNum);
-
-            /* EPWM channel configuration */
-            EpwmAppPwmCfg(pPwm);
-//        }
-//    }
+	/* EPWM channel configuration */
+	EpwmAppPwmCfg(pPwm);
 
     return status;
 }
@@ -217,18 +185,34 @@ uint32_t EPWMAppInit(epwmAppPwmObj_t *pPwm)
 static void EpwmAppPwmCfg(epwmAppPwmObj_t *pObj)
 {
     uint32_t baseAddr = pObj->instAddr;
-    uint32_t pwmCh    = pObj->pwmCh;
+    //uint32_t pwmCh    = pObj->pwmCh;
     uint32_t pwmFuncClk = pObj->funcClk;
     epwmAppPwmCfg_t *pPwm = &pObj->pwmCfg;
 
     /* Configure the Time base Sub-Module */
     EpwmAppTimebaseModuleCfg(baseAddr, pwmFuncClk, &pPwm->tbCfg);
 
-    /* Counter-Comparator Sub-Module Configuration */
-    EpwmAppCounterComparatorCfg(baseAddr, &pPwm->ccCfg);
-
     /* Configure Action Qualifier */
-    EPWMAqActionOnOutputCfg(baseAddr, pwmCh, &pPwm->aqCfg);
+    EPWMAqActionOnOutputCfg(baseAddr, 0U, &pPwm->aqCfg);
+
+	
+	pPwm->aqCfg.cmpBDownAction = EPWM_AQ_ACTION_DONOTHING;/* zeroAction */
+	pPwm->aqCfg.cmpBUpAction	= EPWM_AQ_ACTION_HIGH; /* prdAction */
+	pPwm->aqCfg.cmpADownAction = EPWM_AQ_ACTION_DONOTHING; /* cmpAUpAction */
+	pPwm->aqCfg.cmpAUpAction	= EPWM_AQ_ACTION_DONOTHING; /* cmpADownAction */
+	pPwm->aqCfg.prdAction		= EPWM_AQ_ACTION_LOW; /* cmpBUpAction */
+	pPwm->aqCfg.zeroAction		= EPWM_AQ_ACTION_DONOTHING;  /* cmpBDownAction */ 
+	
+	EPWMAqActionOnOutputCfg(baseAddr, 1U, &pPwm->aqCfg);
+	
+	
+	/* Counter Comparator A configuration */
+    EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_A, pPwm->ccCfg.cmpAValue,
+                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
+
+    /* Counter Comparator B configuration */
+    EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_B, pPwm->ccCfg.cmpBValue,
+                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
 	
 #if (0)
     /* Dead band sub-module configuration */
@@ -354,16 +338,4 @@ static void EpwmAppTimebaseModuleCfg(uint32_t baseAddr,
 
     /* Configure the emulation behaviour */
     EPWMTbSetEmulationMode(baseAddr, EPWM_TB_EMU_MODE_STP_AFT_NEXT_CYCLE);
-}
-
-static void EpwmAppCounterComparatorCfg(uint32_t baseAddr,
-                                     epwmCounterCmpCfg_t *pCcCfg)
-{
-    /* Counter Comparator A configuration */
-    EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_A, pCcCfg->cmpAValue,
-                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
-
-    /* Counter Comparator B configuration */
-    EPWMCounterComparatorCfg(baseAddr, EPWM_CC_CMP_B, pCcCfg->cmpBValue,
-                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
 }
