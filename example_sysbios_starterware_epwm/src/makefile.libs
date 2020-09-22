@@ -1,6 +1,6 @@
 #
 # This file was generated based on the configuration script:
-#     C:\Workspace\ws_drone_v10\example_sysbios_starterware_epwm\app.cfg
+#     C:\Workspace\ws_drone_v10\.git\drone_bbb\example_sysbios_starterware_epwm\app.cfg
 #
 # This makefile may be included in other makefiles that need to build
 # the libraries containing the compiled source files generated as
@@ -14,7 +14,7 @@
 #
 # The absolute path to the generated source directory (at the time the
 # sources were generated) is:
-#    C:\Workspace\ws_drone_v10\example_sysbios_starterware_epwm\src
+#    C:\Workspace\ws_drone_v10\.git\drone_bbb\example_sysbios_starterware_epwm\src
 #
 GEN_SRC_DIR ?= ../src
 

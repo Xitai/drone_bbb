@@ -113,8 +113,8 @@ typedef struct epwmAppPwmObj
 /*                         Global Variables Declarations                      */
 /* ========================================================================== */
 
-/* Global structure containing the IP configuration defaults */
-extern epwmAppPwmObj_t EPWMAPPPWMOBJ_DEFAULT;
+extern epwmAppPwmObj_t CONF_EPWM1_MOTOR;
+//extern epwmAppPwmObj_t CONF_EPWM1B_MOTOR;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */

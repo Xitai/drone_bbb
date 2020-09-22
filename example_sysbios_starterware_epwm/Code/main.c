@@ -103,16 +103,16 @@ static void EpwmAppUpdateCfgParams(epwmAppPwmObj_t *pPwm,
 /* ========================================================================== */
 
 /** \brief Application Use Case default configuration */
-static const epwmAppHapticsCfg_t EPWMAPPHAPTICSCFG_DEFAULT =
-{
-        10U * FREQ_MHZ, /* tbClk */
-        20U * FREQ_KHZ, /* pwmFreq */
-        FALSE, /* enableDeadband */
-        FALSE, /* enableChopper */
-        FALSE, /* enableTripzone */
-        FALSE, /* enableEventTrigger */
-        FALSE  /* enableHighResolution */
-};
+//static const epwmAppHapticsCfg_t EPWMAPPHAPTICSCFG_DEFAULT =
+//{
+//        10U * FREQ_MHZ, /* tbClk */
+//        20U * FREQ_KHZ, /* pwmFreq */
+//        FALSE, /* enableDeadband */
+//        FALSE, /* enableChopper */
+//        FALSE, /* enableTripzone */
+//        FALSE, /* enableEventTrigger */
+//        FALSE  /* enableHighResolution */
+//};
 
 
 /** \brief Global object for the EPWM Haptics motor Use case data structure.  */
@@ -165,41 +165,25 @@ Void taskFxn(UArg a0, UArg a1)
 	
     int32_t status = S_PASS;
 
-    /* Enable cache memory and MMU */
-    //MMUConfigAndEnable();
-    //CACHEEnable(CACHE_IDCACHE, CACHE_INNER_OUTER);
-
     /* Initialize the Haptics motor use case object with default values. */
-    gHapticsCfg = EPWMAPPHAPTICSCFG_DEFAULT;
+    //gHapticsCfg = EPWMAPPHAPTICSCFG_DEFAULT;
 
     /* Initialize the global IP configuration with default configuration. */
-    gPwmCfg     = EPWMAPPPWMOBJ_DEFAULT;
-
-//    status = BOARDInit(NULL);
-
-    /* Initialize the UART console */
-//    CONSOLEUtilsInit();
-
-    /* Select the console type based on compile time check */
-//    CONSOLEUtilsSetType(CONSOLE_UTILS_TYPE_UART);
+    gPwmCfg     = CONF_EPWM1_MOTOR;
 
     UART_printf("\n StarterWare EPWM Application!!\n");
     UART_printf("BOARDInit status [0x%x]\n", status);
 
-    /* Print SoC & Board Information. */
-    //SOCPrintInfo();
-    //BOARDPrintInfo();
-
     /* Get board info */
-    status = EpwmAppBoardInfoGet(&gPwmCfg);
-    if (S_PASS == status)
-    {
+//    status = EpwmAppBoardInfoGet(&gPwmCfg);
+//    if (S_PASS == status)
+//    {
         /* Get SoC info */
         status = EpwmAppSocInfoGet(&gPwmCfg);
         if(S_PASS == status)
         {
             /* EPWM Default configuration */
-            EpwmAppUpdateCfgParams(&gPwmCfg, &gHapticsCfg);
+            //EpwmAppUpdateCfgParams(&gPwmCfg, &gHapticsCfg);
 
             /* EPWM IP configuration */
             status = EPWMAppInit(&gPwmCfg);
@@ -213,19 +197,18 @@ Void taskFxn(UArg a0, UArg a1)
             }
             else
             {
-                UART_printf
-                    ("\n FAILURE!!! EPWM IP configuration is failed ...\n");
+                UART_printf("\n FAILURE!!! EPWM IP configuration is failed ...\n");
             }
         }
         else
         {
             UART_printf("\nEPWM IP instance is not present ...\n");
         }
-    }
-    else
-    {
-        UART_printf("This example is not supported on this board!\n");
-    }
+//    }
+//    else
+//    {
+//        UART_printf("This example is not supported on this board!\n");
+//    }
 
     System_printf("exit taskFxn()\n");
 
@@ -262,40 +245,10 @@ Int main()
 static int32_t EpwmAppBoardInfoGet(epwmAppPwmObj_t *pObj)
 {
     int32_t status = E_FAIL;
-//    chipdbModuleID_t modId;
-//    uint32_t  epwmInstNum;
-//    uint32_t  epwmOutputCh;
-//
-//    /* Get the PWMSS[EPWM] data for HAPTICS MOTOR from the board data */
-//    modId = BOARDGetDeviceCtrlModId(DEVICE_ID_HAPTICS, EPWM_HAPTICS_INST_NUM);
-//    if (CHIPDB_MOD_ID_INVALID == modId)
-//    {
-//        UART_printf("Device is not available on this board!\n");
-//    }
-//    else if (CHIPDB_MOD_ID_PWMSS == modId)
-//    {
-//        epwmInstNum = BOARDGetDeviceCtrlModInstNum(DEVICE_ID_HAPTICS,
-//            EPWM_HAPTICS_INST_NUM);
-//        epwmOutputCh = BOARDGetDeviceCtrlInfo(DEVICE_ID_HAPTICS,
-//            EPWM_HAPTICS_INST_NUM);
-//
-//        if ((INVALID_INST_NUM == epwmInstNum) || (INVALID_INFO == epwmOutputCh))
-//        {
-//            UART_printf("Invalid EPWM board data!\n");
-//        }
-//        else
-//        {
-//            UART_printf("EPWM Instance number: %d\n", epwmInstNum);
-//            UART_printf("EPWM Output Channel : %d\n", epwmOutputCh);
-            pObj->instNum = 2U; 
-            pObj->pwmCh   = 0U;
-            status = S_PASS;
-//        }
-//    }
-//    else
-//    {
-//        UART_printf("Device is not connected to EPWM!\n");
-//    }
+	
+	pObj->instNum = 2U; // EPWM2
+	pObj->pwmCh   = 0U; // EPWM2A
+	status = S_PASS;
 
     return (status);
 }
@@ -331,8 +284,8 @@ static void EpwmAppUpdateCfgParams(epwmAppPwmObj_t *pPwm,
     pPwm->enableHighResolution = pHaptics->enableDeadband;
 
     /* Tb period/freq has to be double the required pwm frequency. */
-    pCfg->tbCfg.pwmtbCounterFreqPrd = pHaptics->pwmFreq * 2U;
-    pCfg->tbCfg.tbClk = pHaptics->tbClk;
+    //pCfg->tbCfg.pwmtbCounterFreqPrd = pHaptics->pwmFreq * 2U;
+    //pCfg->tbCfg.tbClk = pHaptics->tbClk;
 
     /* Action Qualifier Action Values */
     /* Toggle output when counter is equal to period value. */
