@@ -1,6 +1,6 @@
 #
 # This file was generated based on the configuration script:
-#     C:\Workspace\ws_drone_v10\.git\drone_bbb\drone_base\app.cfg
+#     C:\Workspace\ws_drone_v10\.git\drone_bbb\drone_base\drone_base.cfg
 #
 # This makefile may be included in other makefiles that need to build
 # the libraries containing the compiled source files generated as

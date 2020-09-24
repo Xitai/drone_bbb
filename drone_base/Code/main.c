@@ -37,7 +37,7 @@
 #include "bbb_i2c.h"
 //#include "icm20948_system.h"
 #include "EmbUtils/Message.h"
-//#include "bbb_epwm.h"
+#include "bbb_epwm.h"
 
 
 /* Test */
@@ -239,6 +239,8 @@ Void taskMain(UArg a0, UArg a1)
 {
 	Task_Handle task;
     Error_Block eb;
+    int32_t status = S_PASS;
+
     System_printf("enter taskMain()\n");
 	
     System_flush(); /* force SysMin output to console */
@@ -261,7 +263,15 @@ Void taskMain(UArg a0, UArg a1)
 	//ext_intr_init();				// 제어보드 인터럽트 & pin 설정
 	
 	// PWM
-	
+    status = InitECU();
+    if(S_PASS == status)
+    {
+        //UART_printf("\nNow Initializing ECU ...\n");
+    }
+    else
+    {
+        //UART_printf("\nECU Initializing Fail...\n");
+    }
 	
 	//--------------------------
 	// Task Initialize
