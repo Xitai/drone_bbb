@@ -76,13 +76,17 @@ typedef struct epwmAppPwmObj
 /*                         Global Variables Declarations                      */
 /* ========================================================================== */
 
-/* None */
+extern epwmAppPwmObj_t gstConfEcu0;
+extern epwmAppPwmObj_t gstConfEcu1;
+extern epwmAppPwmObj_t gstConfEcu2;
+extern epwmAppPwmObj_t gstConfEcu3;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
 int32_t InitECU(void);
+void EpwmCounterChange(epwmAppPwmObj_t *pObj, uint32_t uiCmpValue);
 
 #ifdef __cplusplus
 }

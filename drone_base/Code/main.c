@@ -38,10 +38,17 @@
 //#include "icm20948_system.h"
 #include "EmbUtils/Message.h"
 #include "bbb_epwm.h"
-
+#include "bbb_system.h"
 
 /* Test */
 #include "Devices/SensorTypes.h"
+
+
+/* ========================================================================== */
+/*                         Global Variables Declarations                      */
+/* ========================================================================== */
+
+machine_status_t gstMcStatus = {0x0,0x0};
 
 /*
  *  ======== taskFxn ========
@@ -112,6 +119,26 @@ static void msg_printer(int level, const char * str, va_list ap);
 Void taskMovement(UArg a0, UArg a1)
 {
     int rc = 0;
+	
+	
+    int32_t  iTestIdx = 0;
+    uint32_t uiCmpVal = 0x4000U;
+	int32_t status = S_PASS;
+	
+	status = InitECU();
+    if(S_PASS == status)
+    {
+		gstMcStatus.uiEcu = ECU_PASS;
+        
+		
+    }
+    else
+    {
+		gstMcStatus.uiEcu = ECU_FAIL;
+    }
+	
+	Task_sleep(10000);
+	
 #ifdef INV_MSG_ENABLE
     /* Setup message logging */
     INV_MSG_SETUP(INV_MSG_LEVEL_MAX, msg_printer);             // 제어보드 로그 메시지 설정 -- 제거/변경
@@ -164,8 +191,6 @@ Void taskMovement(UArg a0, UArg a1)
     //EPWMAppInit(&gPwmCfg);
 
 
-
-
 	while(1)
 	{
 		//giTestCount[0]++;
@@ -194,6 +219,30 @@ Void taskMovement(UArg a0, UArg a1)
 
             //System_printf("enter taskCommMove()\n");
             //System_flush();
+
+
+            if(0)//(gstMcStatus.uiEcu == ECU_PASS)
+            {
+                iTestIdx++;
+                if(iTestIdx > 1000000) iTestIdx = 0;
+
+                if(iTestIdx%10)
+                {
+                    uiCmpVal--;
+                }
+                //Task_sleep(5);
+                //EpwmCounterChange(&gstConfEcu0, 0x3000U);
+                //EpwmCounterChange(&gstConfEcu1, 0x3000U);
+                //EpwmCounterChange(&gstConfEcu2, 0x3000U);
+                //EpwmCounterChange(&gstConfEcu3, 0x3000U);
+
+                //`Task_sleep(5);
+                EpwmCounterChange(&gstConfEcu0, uiCmpVal);
+                EpwmCounterChange(&gstConfEcu1, uiCmpVal);
+                EpwmCounterChange(&gstConfEcu2, uiCmpVal);
+                EpwmCounterChange(&gstConfEcu3, uiCmpVal);
+            }
+
         }
 	}
 
@@ -205,16 +254,32 @@ Void taskCommMove(UArg a0, UArg a1)
     //int i;
 	while(1)
 	{
-	    //if(uchImuStart == 0x1)
-	    {
-            giTestCount[1]++;
-
-            System_printf("enter taskCommMove()\n");
-
-            System_flush(); /* force SysMin output to console */
-
-            Task_sleep(1);
-	    }
+		if(gstMcStatus.uiEcu == ECU_PASS)
+		{
+			//Task_sleep(5);
+			//EpwmCounterChange(&gstConfEcu0, 0x3000U);
+			//EpwmCounterChange(&gstConfEcu1, 0x3000U);
+			//EpwmCounterChange(&gstConfEcu2, 0x3000U);
+			//EpwmCounterChange(&gstConfEcu3, 0x3000U);
+			
+			Task_sleep(5);
+			EpwmCounterChange(&gstConfEcu0, 0x4000U);
+			EpwmCounterChange(&gstConfEcu1, 0x4000U);
+			EpwmCounterChange(&gstConfEcu2, 0x4000U);
+			EpwmCounterChange(&gstConfEcu3, 0x4000U);
+		}
+			
+		
+	   ////if(uchImuStart == 0x1)
+	   //{
+       //    giTestCount[1]++;
+	   //
+       //    System_printf("enter taskCommMove()\n");
+	   //
+       //    System_flush(); /* force SysMin output to console */
+	   //
+       //    Task_sleep(1);
+	   //}
 	}
 }
 Void taskCommStreamData(UArg a0, UArg a1)
@@ -263,15 +328,17 @@ Void taskMain(UArg a0, UArg a1)
 	//ext_intr_init();				// 제어보드 인터럽트 & pin 설정
 	
 	// PWM
-    status = InitECU();
-    if(S_PASS == status)
-    {
-        //UART_printf("\nNow Initializing ECU ...\n");
-    }
-    else
-    {
-        //UART_printf("\nECU Initializing Fail...\n");
-    }
+    //status = InitECU();
+    //if(S_PASS == status)
+    //{
+	//	gstMcStatus.uiEcu = ECU_PASS;
+    //    
+	//	
+    //}
+    //else
+    //{
+	//	gstMcStatus.uiEcu = ECU_FAIL;
+    //}
 	
 	//--------------------------
 	// Task Initialize
@@ -282,18 +349,18 @@ Void taskMain(UArg a0, UArg a1)
         BIOS_exit(0);
     }
 
-	task = Task_create(taskCommMove, NULL, &eb);
-    if (task == NULL) {
-        System_printf("Task_create() failed!\n");
-        BIOS_exit(0);
-    }
+	//task = Task_create(taskCommMove, NULL, &eb);
+    //if (task == NULL) {
+    //    System_printf("Task_create() failed!\n");
+    //    BIOS_exit(0);
+   // }
 	
-	task = Task_create(taskCommStreamData, NULL, &eb);
-	task = Task_create(uart_test, NULL, &eb);
-    if (task == NULL) {
-        System_printf("Task_create() failed!\n");
-       BIOS_exit(0);
-    }
+//	task = Task_create(taskCommStreamData, NULL, &eb);
+//	task = Task_create(uart_test, NULL, &eb);
+//    if (task == NULL) {
+//        System_printf("Task_create() failed!\n");
+//       BIOS_exit(0);
+//    }
 }
 
 /*

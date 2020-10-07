@@ -25,7 +25,7 @@
 /*                                Macros                                      */
 /* ========================================================================== */
 
-/* None */
+#define ECU_DEFAULT_CMP_VAL		(0x4000U)
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -64,8 +64,8 @@ static int32_t EPWMAppInit(epwmAppPwmObj_t *pPwm);
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/** Motor 0 EPWM Configuration */
-epwmAppPwmObj_t gstConfEpwm1aEcu0 =
+/** Motor 0 EPWM1A Configuration */
+epwmAppPwmObj_t gstConfEcu0 =
 {
     0U, /* pwmCh*/
     1U, /* instNum*/
@@ -87,8 +87,8 @@ epwmAppPwmObj_t gstConfEpwm1aEcu0 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+            ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+            ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -123,9 +123,8 @@ epwmAppPwmObj_t gstConfEpwm1aEcu0 =
     } /* epwmAppPwmCfg_t*/
 }; /* epwmAppPwmObj_t */
 
-
-/** Motor 1 EPWM Configuration */
-epwmAppPwmObj_t gstConfEpwm1bEcu1 =
+/** Motor 1 EPWM1B Configuration */
+epwmAppPwmObj_t gstConfEcu1 =
 {    
 	1U, /* pwmCh*/
     1U, /* instNum*/
@@ -147,8 +146,8 @@ epwmAppPwmObj_t gstConfEpwm1bEcu1 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+            ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+            ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -183,9 +182,8 @@ epwmAppPwmObj_t gstConfEpwm1bEcu1 =
     } /* epwmAppPwmCfg_t*/
 }; /* epwmAppPwmObj_t */
 
-
-/** Motor 2 EPWM Configuration */
-epwmAppPwmObj_t gstConfEpwm2aEcu2 =
+/** Motor 2 EPWM2A Configuration */
+epwmAppPwmObj_t gstConfEcu2 =
 {
     0U, /* pwmCh*/
     2U, /* instNum*/
@@ -207,8 +205,8 @@ epwmAppPwmObj_t gstConfEpwm2aEcu2 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+            ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+            ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -243,9 +241,8 @@ epwmAppPwmObj_t gstConfEpwm2aEcu2 =
     } /* epwmAppPwmCfg_t*/
 }; /* epwmAppPwmObj_t */
 
-
-/** Motor 3 EPWM Configuration */
-epwmAppPwmObj_t gstConfEpwm2bEcu3 =
+/** Motor 3 EPWM2B Configuration */
+epwmAppPwmObj_t gstConfEcu3 =
 {    
 	1U, /* pwmCh*/
     2U, /* instNum*/
@@ -267,8 +264,8 @@ epwmAppPwmObj_t gstConfEpwm2bEcu3 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+            ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+            ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -312,21 +309,21 @@ int32_t InitECU(void)
 {
 	 int32_t status = S_PASS;
 	 
-	 status = EPWMAppInit(&gstConfEpwm1aEcu0);
+	 status = EPWMAppInit(&gstConfEcu0);
 	 
 	 if(status == S_PASS)
 	 {
-		 status |= EPWMAppInit(&gstConfEpwm1bEcu1);
+		 status |= EPWMAppInit(&gstConfEcu1);
 	 }
 	 
 	 if(status == S_PASS)
 	 {
-		 status |= EPWMAppInit(&gstConfEpwm2aEcu2);
+		 status |= EPWMAppInit(&gstConfEcu2);
 	 }
 	 
 	 if(status == S_PASS)
 	 {
-		 status |= EPWMAppInit(&gstConfEpwm2bEcu3);
+		 status |= EPWMAppInit(&gstConfEcu3);
 	 }
 	 
 	 return status;
@@ -515,4 +512,15 @@ static int32_t EpwmAppSocInfoGet(epwmAppPwmObj_t *pObj)
 
     return status;
 }
+
+void EpwmCounterChange(epwmAppPwmObj_t *pObj, uint32_t uiCmpValue)
+{
+	uint32_t baseAddr = pObj->instAddr;
+	uint32_t pwmCh    = pObj->pwmCh;
+	
+	/* Counter Comparator A configuration */
+    EPWMCounterComparatorCfg(baseAddr, pwmCh, uiCmpValue,
+                             EPWM_SHADOW_REG_CTRL_DISABLE, EPWM_CC_CMP_LOAD_MODE_CNT_EQ_ZERO, TRUE);
+}
+
 

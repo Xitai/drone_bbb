@@ -28,7 +28,7 @@
 	<variableList>
 		<variable>
 			<name>ORIGINAL_PROJECT_ROOT</name>
-			<value>file:/C:/Workspace/ws_drone_v10/.git/drone_bbb/example_sysbios_starterware_epwm</value>
+			<value>file:/C:/Workspace/Drone/ccs_workspace/git/drone_bbb/example_sysbios_starterware_epwm</value>
 		</variable>
 		<variable>
 			<name>STARTERWARE_DIR</name>

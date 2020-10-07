@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="x-windows-949"?>
 <!--  This file conforms to the DTD xdc/bld/release.dtd -->
-<release name="bbbAM335x_drone" label="default" date="1599435982612" buildCount="1" producerId="undefined">
+<release name="bbbAM335x_drone" label="default" date="1600327948781" buildCount="5" producerId="undefined">
 <package name="bbbAM335x_drone"
     version=""/>
 <imports>
@@ -56,8 +56,8 @@
         <file name="IPlatform.xdc"/>
     </package>
     <package name="ti.platforms.generic"
-        version="1, 0, 0, 1, 1580513152166"
-        providerId="C:/ti/bios_6_82_01_19/packages">
+        version="1, 0, 0, 1, 1562626915782"
+        providerId="C:/ti/bios_6_76_03_01/packages">
         <file name="Platform.xdc"/>
     </package>
     <package name="xdc.shelf"

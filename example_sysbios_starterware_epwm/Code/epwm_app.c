@@ -57,6 +57,7 @@ static int32_t EpwmAppSocInfoGet(epwmAppPwmObj_t *pObj);
 
 static int32_t EPWMAppInit(epwmAppPwmObj_t *pPwm);
 
+#define ECU_DEFAULT_CMP_VAL     (0x4000U)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -84,8 +85,8 @@ epwmAppPwmObj_t gstConfEpwm1aEcu0 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+             ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+             ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -144,8 +145,8 @@ epwmAppPwmObj_t gstConfEpwm1bEcu1 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+             ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+             ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -204,8 +205,8 @@ epwmAppPwmObj_t gstConfEpwm2aEcu2 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+             ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+             ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -264,8 +265,8 @@ epwmAppPwmObj_t gstConfEpwm2bEcu3 =
             0U  /* syncOutSrc */
         }, /* epwmTimebaseCfg_t */
         {
-            0x3500U, /* cmpAValue */
-            0x3500U  /* cmpBValue */
+             ECU_DEFAULT_CMP_VAL, /* cmpAValue */
+             ECU_DEFAULT_CMP_VAL  /* cmpBValue */
         }, /* epwmCounterCmpCfg_t */
         {
             EPWM_AQ_ACTION_DONOTHING, /* zeroAction */
@@ -507,7 +508,7 @@ static int32_t EpwmAppSocInfoGet(epwmAppPwmObj_t *pObj)
     }
     else
     {
-       UART_printf("PWMSS instance number is not present!\n");
+       //UART_printf("PWMSS instance number is not present!\n");
        status = E_FAIL;
     }
 

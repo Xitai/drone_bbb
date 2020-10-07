@@ -24,7 +24,7 @@
 #define I2C_EEPROM_TEST_LENGTH   		1  			/* Read (and write) test in bytes */
 #define I2C_EEPROM_ADDR          		(0x68)		//BOARD_I2C_EEPROM_ADDR
 #define I2C_EEPROM_ADDR_SIZE     		1   		/* in bytes */
-#define I2C_TRANSACTION_TIMEOUT         (10000U)
+#define I2C_TRANSACTION_TIMEOUT         (20000U)
 #define I2C_EEPROM_TEST_ADDR            (0x00)
 
 #define I2C_log                	UART_printf
